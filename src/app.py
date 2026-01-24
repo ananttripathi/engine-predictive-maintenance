@@ -170,19 +170,17 @@ def main() -> None:
 
     # Sidebar
     with st.sidebar:
-        st.header("⚙️ Configuration")
-        
         # In HF Space, always use HF model and hide selection
         is_in_space = _is_running_in_hf_space()
         default_source = _get_default_source()
         
         if is_in_space:
-            # In Space, always use HF model, no selection needed
+            # In Space: completely hide model source selection, always use HF
             source = "hf"
-            st.info("🤖 **Model Source:** Hugging Face Hub")
-            st.caption("Model loaded from Hugging Face Model Hub")
+            # Don't show any configuration UI in Space
         else:
-            # Local development: show selection
+            # Local development: show configuration section
+            st.header("⚙️ Configuration")
             source = st.radio(
                 "📦 Model Source:",
                 options=["local", "hf"],
