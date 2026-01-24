@@ -195,13 +195,21 @@ def main() -> None:
         
         st.header("📊 Quick Stats")
         if is_in_space:
+            # In Space: always show HF model status
             if config.HF_TOKEN and config.HF_MODEL_REPO:
-                st.success("✅ Model Available")
-                st.caption("Model will be loaded from Hugging Face Hub")
+                st.success("✅ Model Ready")
+                st.caption(f"Loading from: {config.HF_MODEL_REPO}")
             else:
-                st.error("❌ HF_TOKEN not configured")
-                st.caption("Set HF_TOKEN as Space secret")
+                st.error("❌ Configuration Missing")
+                st.caption("Set HF_TOKEN as Space secret in Settings")
+                st.markdown("""
+                **To fix:**
+                1. Go to Space Settings
+                2. Add secret: `HF_TOKEN`
+                3. Restart Space
+                """)
         else:
+            # Local development: check local model
             if os.path.exists(config.BEST_MODEL_LOCAL_PATH):
                 st.success("✅ Model Available")
                 st.caption("Trained model found locally")
