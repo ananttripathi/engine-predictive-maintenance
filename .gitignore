@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# MLflow
+mlruns/
+.mlflow/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+*.out
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Model files (optional - uncomment if you don't want to track large model files)
+# models/*.joblib
+# models/*.pkl
+
+# Data files (optional - uncomment if data is too large)
+# data/*.csv
+# data/processed/*.csv
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
