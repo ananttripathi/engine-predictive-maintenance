@@ -1,5 +1,14 @@
 ## Predictive Maintenance – Engine Failure Classification (MLOps Project)
 
+![GitHub](https://img.shields.io/github/license/ananttripathi/engine-predictive-maintenance)
+![GitHub last commit](https://img.shields.io/github/last-commit/ananttripathi/engine-predictive-maintenance)
+![GitHub repo size](https://img.shields.io/github/repo-size/ananttripathi/engine-predictive-maintenance)
+![Python](https://img.shields.io/badge/python-3.10-blue.svg)
+![Streamlit](https://img.shields.io/badge/streamlit-1.43.2-red.svg)
+![MLflow](https://img.shields.io/badge/mlflow-2.x-orange.svg)
+![Hugging Face](https://img.shields.io/badge/huggingface-spaces-yellow.svg)
+![GitHub Actions](https://img.shields.io/github/actions/workflow/status/ananttripathi/engine-predictive-maintenance/pipeline.yml?branch=main&label=CI/CD)
+
 This project builds an end‑to‑end **predictive maintenance system** for small and large engines using sensor data (RPM, pressures, temperatures) to classify whether an engine is **healthy** or **requires maintenance**.
 
 The work is organized to satisfy the provided **interim and final report rubrics**, including:
@@ -63,26 +72,56 @@ The work is organized to satisfy the provided **interim and final report rubrics
 
 ### What You Need to Configure
 
-- A **Hugging Face account** and **access token** with permission to create:
-  - One **dataset repo** for the engine data,
-  - One **model repo** for the trained classifier,
-  - One **Space** (Streamlit) for deployment.
-- A **GitHub repository** linked to this folder, with secrets:
-  - `HF_TOKEN` – Your Hugging Face token.
-  - `HF_DATASET_REPO` – Dataset repo ID (e.g., `username/engine-maintenance-dataset`).
-  - `HF_MODEL_REPO` – Model repo ID (e.g., `username/engine-maintenance-model`).
-  - `HF_SPACE_REPO` – Space repo ID (e.g., `username/engine-maintenance-space`).
+#### 1. Hugging Face Configuration
+
+**Update `src/config.py`** (lines 58-62) with your Hugging Face username:
+
+```python
+HF_DATASET_REPO = os.getenv("HF_DATASET_REPO", "your-username/engine-maintenance-dataset")
+HF_MODEL_REPO = os.getenv("HF_MODEL_REPO", "your-username/engine-maintenance-model")
+HF_SPACE_REPO = os.getenv("HF_SPACE_REPO", "your-username/engine-maintenance-space")
+```
+
+Replace `"your-username"` with your actual Hugging Face username (e.g., `"ananttripathi"`).
+
+**Or set environment variables:**
+```bash
+export HF_TOKEN="hf_your_token_here"
+export HF_DATASET_REPO="your-username/engine-maintenance-dataset"
+export HF_MODEL_REPO="your-username/engine-maintenance-model"
+export HF_SPACE_REPO="your-username/engine-maintenance-space"
+```
+
+#### 2. GitHub Repository Configuration
+
+**A. Create GitHub Repository:**
+1. Create a new repository on GitHub (e.g., `engine-predictive-maintenance`)
+2. Push this `mlops` folder to it:
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit: Predictive maintenance MLOps pipeline"
+   git remote add origin https://github.com/your-username/engine-predictive-maintenance.git
+   git push -u origin main
+   ```
+
+**B. Add GitHub Secrets:**
+Go to your GitHub repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**
+
+Add these 4 secrets:
+- `HF_TOKEN` – Your Hugging Face access token (from https://huggingface.co/settings/tokens)
+- `HF_DATASET_REPO` – e.g., `your-username/engine-maintenance-dataset`
+- `HF_MODEL_REPO` – e.g., `your-username/engine-maintenance-model`
+- `HF_SPACE_REPO` – e.g., `your-username/engine-maintenance-space`
+
+**C. Update README with GitHub Repo URL:**
+Add this section to your README (or in your final notebook):
+```markdown
+## GitHub Repository
+- **Repository URL**: https://github.com/your-username/engine-predictive-maintenance
+- **GitHub Actions**: https://github.com/your-username/engine-predictive-maintenance/actions
+```
 
 Once these values are set, you can run the scripts locally and/or via GitHub Actions to produce outputs that cover all the rubric sections (data registration, EDA, data prep, modeling, deployment, and automated workflow).
 
-
----
-
-## GitHub Repository
-
-**Repository Information:**
-- **GitHub Username**: `ananttripathi`
-- **Repository URL**: https://github.com/ananttripathi/engine-predictive-maintenance
-- **GitHub Actions**: https://github.com/ananttripathi/engine-predictive-maintenance/actions
-
-**Note:** Replace `engine-predictive-maintenance` with your actual repository name after you create it on GitHub.
+**📖 For detailed setup instructions, see `CONFIGURATION_GUIDE.md`**
