@@ -1,17 +1,6 @@
 ## Predictive Maintenance – Engine Failure Classification (MLOps Project)
 
-![GitHub](https://img.shields.io/github/license/ananttripathi/engine-predictive-maintenance)
-![GitHub last commit](https://img.shields.io/github/last-commit/ananttripathi/engine-predictive-maintenance)
-![GitHub repo size](https://img.shields.io/github/repo-size/ananttripathi/engine-predictive-maintenance)
-![GitHub stars](https://img.shields.io/github/stars/ananttripathi/engine-predictive-maintenance?style=social)
-![GitHub forks](https://img.shields.io/github/forks/ananttripathi/engine-predictive-maintenance?style=social)
-![Python](https://img.shields.io/badge/python-3.10-blue.svg)
-![Streamlit](https://img.shields.io/badge/streamlit-1.43.2-red.svg)
-![MLflow](https://img.shields.io/badge/mlflow-2.x-orange.svg)
-![Hugging Face](https://img.shields.io/badge/huggingface-spaces-yellow.svg)
-![GitHub Actions](https://img.shields.io/github/actions/workflow/status/ananttripathi/engine-predictive-maintenance/pipeline.yml?branch=main&label=CI/CD)
-![Scikit-learn](https://img.shields.io/badge/scikit--learn-1.6.0-green.svg)
-![Status](https://img.shields.io/badge/status-active-success.svg)
+> 🎯 **YOLO Achievement PR** - Merging without review to earn the GitHub YOLO badge!
 
 This project builds an end‑to‑end **predictive maintenance system** for small and large engines using sensor data (RPM, pressures, temperatures) to classify whether an engine is **healthy** or **requires maintenance**.
 
