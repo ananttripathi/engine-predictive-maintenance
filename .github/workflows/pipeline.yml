@@ -26,8 +26,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Upload raw engine dataset to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_DATASET_REPO: ${{ secrets.HF_DATASET_REPO }}
         run: |
-          python src/data_register.py
+          cd src && python data_register.py
 
   data-prep:
     needs: register-dataset
@@ -46,8 +49,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run data preparation (cleaning, splitting, upload)
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_DATASET_REPO: ${{ secrets.HF_DATASET_REPO }}
         run: |
-          python src/data_prep.py
+          cd src && python data_prep.py
 
   model-training:
     needs: data-prep
@@ -67,8 +73,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Train model with MLflow tracking and register to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_DATASET_REPO: ${{ secrets.HF_DATASET_REPO }}
+          HF_MODEL_REPO: ${{ secrets.HF_MODEL_REPO }}
         run: |
-          python src/train.py
+          cd src && python train.py
 
   deploy-hosting:
     needs: model-training
@@ -87,6 +97,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Deploy Streamlit app and Dockerfile to Hugging Face Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_SPACE_REPO: ${{ secrets.HF_SPACE_REPO }}
         run: |
-          python src/deploy_to_hf.py
+          cd src && python deploy_to_hf.py
 
