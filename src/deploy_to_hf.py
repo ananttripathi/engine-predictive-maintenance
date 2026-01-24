@@ -41,6 +41,45 @@ def main() -> None:
         exist_ok=True,
     )
 
+    # Create Space README with proper configuration
+    space_readme = """---
+title: Engine Predictive Maintenance
+emoji: 🔧
+colorFrom: blue
+colorTo: red
+sdk: docker
+app_file: src/app.py
+pinned: false
+---
+
+# Engine Predictive Maintenance System
+
+Predictive maintenance application for engine failure classification using sensor data.
+
+## Features
+
+- Real-time engine condition prediction
+- Interactive sensor visualizations
+- Model inference from trained Random Forest classifier
+- Modern Streamlit interface
+
+## Usage
+
+Enter sensor values (RPM, pressures, temperatures) to get real-time predictions about engine health.
+
+## Model
+
+Trained Random Forest model with hyperparameter tuning, deployed from Hugging Face Model Hub.
+"""
+    
+    # Upload Space README first
+    api.upload_file(
+        path_or_fileobj=space_readme.encode(),
+        path_in_repo="README.md",
+        repo_id=space_repo,
+        repo_type="space",
+    )
+
     # Upload project files needed for deployment.
     # We ignore large local artifacts like raw data, mlruns, and models,
     # similar to how the reference notebook uploads only the deployment folder.
@@ -56,6 +95,7 @@ def main() -> None:
             ".git/*",
             "__pycache__/*",
             ".github/*",
+            "README.md",  # Don't upload project README, use Space-specific one
         ],
     )
 
