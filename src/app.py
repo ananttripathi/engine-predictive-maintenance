@@ -20,8 +20,8 @@ from inference import predict_engine_condition
 
 def _is_running_in_hf_space() -> bool:
     """Check if app is running in Hugging Face Space."""
-    # HF Spaces set SPACE_ID environment variable
-    return os.getenv("SPACE_ID") is not None
+    # HF Spaces set SPACE_ID or SYSTEM environment variable
+    return os.getenv("SPACE_ID") is not None or os.getenv("SYSTEM") == "spaces"
 
 
 def _get_default_source() -> str:
