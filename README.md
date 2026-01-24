@@ -193,17 +193,17 @@ This project is configured with:
 **Update `src/config.py`** with your Hugging Face username:
 
 ```python
-HF_DATASET_REPO = os.getenv("HF_DATASET_REPO", "your-username/engine-maintenance-dataset")
-HF_MODEL_REPO = os.getenv("HF_MODEL_REPO", "your-username/engine-maintenance-model")
-HF_SPACE_REPO = os.getenv("HF_SPACE_REPO", "your-username/engine-maintenance-space")
+HF_DATASET_REPO = os.getenv("HF_DATASET_REPO", "ananttripathiak/engine-maintenance-dataset")
+HF_MODEL_REPO = os.getenv("HF_MODEL_REPO", "ananttripathiak/engine-maintenance-model")
+HF_SPACE_REPO = os.getenv("HF_SPACE_REPO", "ananttripathiak/engine-maintenance-space")
 ```
 
 **Or set environment variables:**
 ```bash
 export HF_TOKEN="hf_your_token_here"
-export HF_DATASET_REPO="your-username/engine-maintenance-dataset"
-export HF_MODEL_REPO="your-username/engine-maintenance-model"
-export HF_SPACE_REPO="your-username/engine-maintenance-space"
+export HF_DATASET_REPO="ananttripathiak/engine-maintenance-dataset"
+export HF_MODEL_REPO="ananttripathiak/engine-maintenance-model"
+export HF_SPACE_REPO="ananttripathiak/engine-maintenance-space"
 ```
 
 #### 2. GitHub Repository Configuration
@@ -224,8 +224,8 @@ Go to your GitHub repo → **Settings** → **Secrets and variables** → **Acti
 
 Add these 4 secrets:
 - `HF_TOKEN` – Your Hugging Face access token (from [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens))
-- `HF_DATASET_REPO` – e.g., `your-username/engine-maintenance-dataset`
-- `HF_MODEL_REPO` – e.g., `your-username/engine-maintenance-model`
-- `HF_SPACE_REPO` – e.g., `your-username/engine-maintenance-space`
+- `HF_DATASET_REPO` – e.g., `ananttripathiak/engine-maintenance-dataset`
+- `HF_MODEL_REPO` – e.g., `ananttripathiak/engine-maintenance-model`
+- `HF_SPACE_REPO` – e.g., `ananttripathiak/engine-maintenance-space`
 
 **📖 For detailed setup instructions, see [`CONFIGURATION_GUIDE.md`](CONFIGURATION_GUIDE.md)**
