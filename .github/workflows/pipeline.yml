@@ -30,7 +30,15 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_DATASET_REPO: ${{ secrets.HF_DATASET_REPO }}
         run: |
-          cd src && python data_register.py
+          echo "Checking environment variables..."
+          echo "HF_TOKEN is set: $([ -n "$HF_TOKEN" ] && echo 'yes' || echo 'no')"
+          echo "HF_DATASET_REPO is set: $([ -n "$HF_DATASET_REPO" ] && echo 'yes' || echo 'no')"
+          echo "Checking if data file exists..."
+          ls -la data/engine_data.csv || echo "ERROR: data/engine_data.csv not found!"
+          echo "Installing dependencies..."
+          pip install -q huggingface_hub
+          echo "Running data registration..."
+          cd src && python -u data_register.py
 
   data-prep:
     needs: register-dataset
