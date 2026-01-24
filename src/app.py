@@ -18,8 +18,17 @@ import config
 from inference import predict_engine_condition
 
 
+def _is_running_in_hf_space() -> bool:
+    """Check if app is running in Hugging Face Space."""
+    # HF Spaces set SPACE_ID environment variable
+    return os.getenv("SPACE_ID") is not None
+
+
 def _get_default_source() -> str:
     """Decide whether to load the model from HF or local based on env vars."""
+    # In HF Space, always use HF model
+    if _is_running_in_hf_space():
+        return "hf"
     if config.HF_TOKEN and config.HF_MODEL_REPO:
         return "hf"
     return "local"
@@ -163,24 +172,42 @@ def main() -> None:
     with st.sidebar:
         st.header("⚙️ Configuration")
         
+        # In HF Space, always use HF model and hide selection
+        is_in_space = _is_running_in_hf_space()
         default_source = _get_default_source()
-        source = st.radio(
-            "📦 Model Source:",
-            options=["local", "hf"],
-            index=0 if default_source == "hf" else 1,
-            format_func=lambda x: "🤖 Hugging Face Hub" if x == "hf" else "💾 Local File",
-            help="Select where to load the trained model from"
-        )
+        
+        if is_in_space:
+            # In Space, always use HF model, no selection needed
+            source = "hf"
+            st.info("🤖 **Model Source:** Hugging Face Hub")
+            st.caption("Model loaded from Hugging Face Model Hub")
+        else:
+            # Local development: show selection
+            source = st.radio(
+                "📦 Model Source:",
+                options=["local", "hf"],
+                index=0 if default_source == "hf" else 1,
+                format_func=lambda x: "🤖 Hugging Face Hub" if x == "hf" else "💾 Local File",
+                help="Select where to load the trained model from"
+            )
         
         st.markdown("---")
         
         st.header("📊 Quick Stats")
-        if os.path.exists(config.BEST_MODEL_LOCAL_PATH):
-            st.success("✅ Model Available")
-            st.caption("Trained model found locally")
+        if is_in_space:
+            if config.HF_TOKEN and config.HF_MODEL_REPO:
+                st.success("✅ Model Available")
+                st.caption("Model will be loaded from Hugging Face Hub")
+            else:
+                st.error("❌ HF_TOKEN not configured")
+                st.caption("Set HF_TOKEN as Space secret")
         else:
-            st.warning("⚠️ Model Not Found")
-            st.caption("Run training script first")
+            if os.path.exists(config.BEST_MODEL_LOCAL_PATH):
+                st.success("✅ Model Available")
+                st.caption("Trained model found locally")
+            else:
+                st.warning("⚠️ Model Not Found")
+                st.caption("Run training script first")
         
         st.markdown("---")
         
@@ -292,6 +319,19 @@ def main() -> None:
             "Coolant_Temperature": coolant_temp,
         }
 
+        # Check if HF_TOKEN is set when using HF model
+        if source == "hf" and not config.HF_TOKEN:
+            st.error("❌ **HF_TOKEN not configured**")
+            st.markdown("""
+            **To fix this:**
+            1. Go to Space Settings → Repository secrets
+            2. Add secret: `HF_TOKEN` with your Hugging Face token
+            3. Restart the Space
+            
+            Get token from: https://huggingface.co/settings/tokens
+            """)
+            st.stop()
+        
         with st.spinner("🤖 Loading model and analyzing sensor data..."):
             try:
                 result = predict_engine_condition(inputs=inputs, source=source)
