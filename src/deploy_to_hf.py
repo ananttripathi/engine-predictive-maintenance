@@ -33,10 +33,11 @@ def main() -> None:
     api = HfApi(token=token)
 
     # Create the Space if it does not exist
+    # Use "docker" SDK since we're deploying with Dockerfile
     api.create_repo(
         repo_id=space_repo,
         repo_type="space",
-        space_sdk="streamlit",
+        space_sdk="docker",
         exist_ok=True,
     )
 
